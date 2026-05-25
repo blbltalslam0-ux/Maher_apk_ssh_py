@@ -7,11 +7,19 @@ source.include_exts = py,png,jpg,kv,atlas
 version = 1.0
 requirements = python3,kivy,pyjnius
 
-# الصلاحيات الحساسة التي يحتاجها الأندرويد لتشغيل الفلاش
+# الصلاحيات الأساسية
 android.permissions = CAMERA, FLASHLIGHT
 
 orientation = portrait
 fullscreen = 1
+
+# تحديد إصدارات مستقرة ومجربة سحابياً لتجنب خطأ Aidl
+android.api = 33
+android.minapi = 21
+android.ndk = 25.2.9519653
+android.skip_update = False
+android.accept_sdk_license = True
+
 android.archs = arm64-v8a, armeabi-v7a
 android.allow_backup = True
 
