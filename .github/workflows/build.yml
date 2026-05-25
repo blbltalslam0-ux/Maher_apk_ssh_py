@@ -1,9 +1,13 @@
 name: Build Maher APK
-on: [push, workflow_dispatch]
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout code
@@ -14,11 +18,18 @@ jobs:
       with:
         python-version: '3.10'
 
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libsqlite3-dev sqlite3 bzip2 libbz2-dev zlib1g-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev
+        pip install --upgrade pip
+        pip install buildozer cython virtualenv
+
     - name: Build with Buildozer
-      uses: ArtemGovorov/buildozer-action@v1
-      with:
-        workdir: .
-        buildozer_version: stable
+      run: |
+        buildozer android debug
+      env:
+        ACCEPT_SDK_LICENSE_NET_BUILDER: "y"
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
