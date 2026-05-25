@@ -1,31 +1,34 @@
-from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from jnius import autoclass
+import flet as ft
 
-class FlashlightApp(App):
-    def build(self):
-        layout = BoxLayout(orientation='vertical', padding=50)
-        
-        # زر التحكم بالكشاف
-        self.btn = Button(
-            text="تشغيل الكشاف",
-            font_size='24sp',
-            background_color=(0, 1, 0, 1) # لون أخضر
-        )
-        self.btn.bind(on_press=self.toggle_flashlight)
-        
-        layout.add_widget(self.btn)
-        return layout
+def main(page: ft.Page):
+    page.title = "Maher Flashlight"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.theme_mode = ft.ThemeMode.LIGHT
 
-    def toggle_flashlight(self, instance):
-        # هنا سيتم ربط كود الفلاش الصافي لاحقاً
-        if self.btn.text == "تشغيل الكشاف":
-            self.btn.text = "إطفاء الكشاف"
-            self.btn.background_color = (1, 0, 0, 1) # لون أحمر
+    # دالة التحكم بالزر والكشاف
+    def toggle_flashlight(e):
+        if btn.text == "تشغيل الكشاف":
+            btn.text = "إطفاء الكشاف"
+            btn.bgcolor = ft.colors.RED
+            # هنا سنضع كود تشغيل الفلاش للأندرويد لاحقاً
         else:
-            self.btn.text = "تشغيل الكشاف"
-            self.btn.background_color = (0, 1, 0, 1) # لون أخضر
+            btn.text = "تشغيل الكشاف"
+            btn.bgcolor = ft.colors.GREEN
+        page.update()
 
-if __name__ == '__main__':
-    FlashlightApp().run()
+    # إنشاء زر كبير واحترافي
+    btn = ft.ElevatedButton(
+        text="تشغيل الكشاف",
+        bgcolor=ft.colors.GREEN,
+        color=ft.colors.WHITE,
+        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10)),
+        width=250,
+        height=60,
+        on_click=toggle_flashlight
+    )
+
+    page.add(btn)
+
+# تشغيل التطبيق
+ft.app(target=main)
