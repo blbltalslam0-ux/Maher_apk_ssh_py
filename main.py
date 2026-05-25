@@ -1,34 +1,20 @@
-import flet as ft
+import time
+from jnius import autoclass
 
-def main(page: ft.Page):
-    page.title = "Maher Flashlight"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.theme_mode = ft.ThemeMode.LIGHT
+def run_app():
+    # استدعاء واجهة الرسائل المنبثقة الصافية في نظام الأندرويد
+    PythonActivity = autoclass('org.kivy.android.PythonActivity')
+    Toast = autoclass('android.widget.Toast')
+    context = PythonActivity.mActivity
 
-    # دالة التحكم بالزر والكشاف
-    def toggle_flashlight(e):
-        if btn.text == "تشغيل الكشاف":
-            btn.text = "إطفاء الكشاف"
-            btn.bgcolor = ft.colors.RED
-            # هنا سنضع كود تشغيل الفلاش للأندرويد لاحقاً
-        else:
-            btn.text = "تشغيل الكشاف"
-            btn.bgcolor = ft.colors.GREEN
-        page.update()
+    # النص السري الخاص بك
+    message = "أهلاً بكم بأول تطبيق قد تم إنشاؤه للهكر ماهر"
 
-    # إنشاء زر كبير واحترافي
-    btn = ft.ElevatedButton(
-        text="تشغيل الكشاف",
-        bgcolor=ft.colors.GREEN,
-        color=ft.colors.WHITE,
-        style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10)),
-        width=250,
-        height=60,
-        on_click=toggle_flashlight
-    )
+    # أمر إظهار الرسالة على الشاشة بخط النظام الافتراضي
+    context.runOnUiThread(lambda: Toast.makeText(context, message, Toast.LENGTH_LONG).show())
+    
+    # انتظر 4 ثوانٍ لكي يرى المستخدم الرسالة بوضوح قبل إغلاق التطبيق
+    time.sleep(4)
 
-    page.add(btn)
-
-# تشغيل التطبيق
-ft.app(target=main)
+if __name__ == "__main__":
+    run_app()
