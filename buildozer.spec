@@ -1,17 +1,16 @@
 [app]
-title = Maher Flet Light
-package.name = maherfletlight
+title = Maher Hacker
+package.name = maherhacker
 package.domain = com.maher
 source.dir = .
 source.include_exts = py
 version = 1.0
 
-# نحدد مكتبة flet ومكتبة jnius للتحكم بالنظام
-requirements = python3,flet,pyjnius
+# المتطلبات الأساسية الصافية فقط لربط الكود بنظام أندرويد
+requirements = python3,pyjnius
 
-android.permissions = CAMERA, FLASHLIGHT
-android.accept_sdk_license = True
 android.archs = arm64-v8a
+android.accept_sdk_license = True
 
 [buildozer]
 log_level = 1
